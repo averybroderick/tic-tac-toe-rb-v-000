@@ -58,3 +58,30 @@ end
 def current_player(board)
   turn_count(board) % 2 == 0 ? "X" : "O"
 end
+
+def won?(board)
+  WIN_COMBINATIONS.each do |combo|
+    if board[combo[0]] == "X" && board[combo[1]] == "X" && board[combo[2]] == "X" || board[combo[0]] == "O" && board[combo[1]] == "O" && board[combo[2]] == "O"
+      return combo
+    end
+  end
+  return false
+end
+
+def full?(board)
+  board.all? do |char|
+    char == "X" || char == "O"? true : false
+  end
+end
+
+def draw?(board)
+  full?(board) && !won?(board)? true : false
+end
+
+def over?(board)
+  full?(board) || won?(board) || draw?(board)? true : false
+end
+
+def winner(board)
+  won?(board)? board[won?(board)[0]] : nil
+end
